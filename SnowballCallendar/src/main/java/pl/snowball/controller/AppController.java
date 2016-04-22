@@ -10,6 +10,7 @@ public class AppController {
 
 	@RequestMapping(value= {"/"}, method=RequestMethod.GET)
 	public String login(Model model) {
+		//krzak
 		return "index";
 	}
 }
