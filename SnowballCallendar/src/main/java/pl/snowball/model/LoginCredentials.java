@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="login_credentials")
@@ -17,9 +20,11 @@ public class LoginCredentials {
 	private Long id;
 	
 	@Column
+	@NotEmpty
 	private String login;
 	
 	@Column
+	@NotEmpty
 	private String password;
 	
 	public String getLogin() {
