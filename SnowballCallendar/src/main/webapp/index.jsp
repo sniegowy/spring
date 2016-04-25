@@ -9,6 +9,6 @@
 <title>Snowball Callendar</title>
 </head>
 <body>
-	<a href="login.html">Login</a>
+	<a href="login.html" class="btn btn-default">Login</a>
 </body>
 </html>

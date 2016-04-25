@@ -16,6 +16,7 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 
 @Configuration
 @EnableWebMvc
@@ -52,5 +53,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
 		interceptor.setParamName("language");
 		registry.addInterceptor(interceptor);
+	}
+	
+	@Bean
+	public TilesConfigurer tilesConfigurer(){
+	    TilesConfigurer tilesConfigurer = new TilesConfigurer();
+	    tilesConfigurer.setDefinitions(new String[] {"/WEB-INF/tiles/tiles.xml"});
+	    tilesConfigurer.setCheckRefresh(true);
+	    return tilesConfigurer;
 	}
 }

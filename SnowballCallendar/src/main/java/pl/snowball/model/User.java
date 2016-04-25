@@ -1,5 +1,6 @@
 package pl.snowball.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="user_data")
@@ -18,14 +21,16 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne
+	@OneToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="login_credentials_id")
 	private LoginCredentials loginCredentials;
 	
 	@Column
+	@NotEmpty
 	private String firstName;
 	
 	@Column
+	@NotEmpty
 	private String lastName;
 	
 	public LoginCredentials getLoginCredentials() {

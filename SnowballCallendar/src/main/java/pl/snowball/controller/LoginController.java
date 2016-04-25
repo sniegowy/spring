@@ -1,12 +1,9 @@
 package pl.snowball.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,19 +18,27 @@ import pl.snowball.service.UserService;
 @Controller
 @SessionAttributes("loginCredentials")
 public class LoginController {
-	
-	@RequestMapping(value="/login", method=RequestMethod.GET)
+
+	@Autowired
+	UserService userService;
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(ModelMap model) {
 		LoginCredentials loginCredentials = new LoginCredentials();
 		model.addAttribute("loginCredentials", loginCredentials);
 		return "login";
 	}
-	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String afterLogin(@Valid @ModelAttribute("loginCredentials") LoginCredentials loginCredentials, BindingResult result) {
-		if(result.hasErrors()) {
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String afterLogin(@Valid @ModelAttribute("loginCredentials") LoginCredentials loginCredentials,
+			BindingResult result) {
+		if (result.hasErrors()) {
 			return "login";
 		}
-		return "redirect:usersTable.html";
+		User user = userService.login(loginCredentials);
+		if (user == null) {
+			return "login";
+		}
+		return "redirect:/user/usersTable.html";
 	}
 }
