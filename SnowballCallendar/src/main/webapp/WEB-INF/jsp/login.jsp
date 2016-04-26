@@ -38,7 +38,7 @@
 					</div>
 				</c:if>
 				
-				<form:form commandName="loginCredentials" class="form-horizontal">
+				<form:form commandName="loginCredentials" class="form-horizontal" method="post">
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label class="col-md-3 control-lable" for="login"
