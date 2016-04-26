@@ -1,8 +1,11 @@
 package pl.snowball.controller;
 
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,6 +24,8 @@ public class LoginController {
 
 	@Autowired
 	UserService userService;
+	@Autowired  
+    private MessageSource messageSource;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(ModelMap model) {
@@ -31,12 +36,14 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String afterLogin(@Valid @ModelAttribute("loginCredentials") LoginCredentials loginCredentials,
-			BindingResult result) {
+			BindingResult result, ModelMap model, Locale locale) {
 		if (result.hasErrors()) {
 			return "login";
 		}
 		User user = userService.login(loginCredentials);
 		if (user == null) {
+			String errorMessage = messageSource.getMessage("login.error", null, locale);
+			model.addAttribute("errorMessage", errorMessage);
 			return "login";
 		}
 		return "redirect:/user/usersTable.html";

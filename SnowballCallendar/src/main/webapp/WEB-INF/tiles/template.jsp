@@ -26,6 +26,37 @@
         height:100px;
     }
     
+    .menu .navbar-default .navbar-brand {
+    	color: #333;
+    }
+    
+    .menu .navbar-default .navbar-nav>.active>a {
+    	color: #ffffff;
+    	background-color: #5cb85c;
+    	border-color: #4cae4c;
+    }
+    
+    .menu .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+        color: #fff;
+	    background-color: #449d44;
+	    border-color: #398439;
+    }
+    
+    .menu .navbar-default .navbar-nav>li>a {
+    	color: #333;	
+    }
+    
+    .menu .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    	color: #333;
+    	background-color: #e6e6e6;
+    	border-color: #adadad;	
+    }
+    
+    .menu .navbar-default {
+    	border-color: #f8f8f8;
+    	background-color: #ffffff;
+    }
+    
     .content {
     	width:100%;
         padding-bottom:20px;
@@ -34,12 +65,12 @@
      
     .footer {
         clear:both;
-        position:absolute;
+        position:relative;
         bottom:0;
         left:0;
-        text-align:center;
         width:100%;
         height:20px;
+        padding-top: 50px;
     }
      
     </style>
