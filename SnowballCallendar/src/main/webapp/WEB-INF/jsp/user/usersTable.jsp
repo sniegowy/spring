@@ -9,7 +9,7 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="page-header">
-					<h1><spring:message code="users.list" /></h1>
+					<h1><spring:message code="users.list" /> - ${user}</h1>
 				</div>
 				<table class="table table-hover">
 					<thead>

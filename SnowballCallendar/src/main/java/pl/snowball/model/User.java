@@ -16,6 +16,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name="user_data")
 public class User {
 	
+	public enum Role {
+		USER, ADMIN;
+	}
+	
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -32,6 +36,9 @@ public class User {
 	@Column
 	@NotEmpty
 	private String lastName;
+	
+	@Column
+	private Role role;
 	
 	public LoginCredentials getLoginCredentials() {
 		return loginCredentials;
@@ -56,5 +63,11 @@ public class User {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

@@ -12,4 +12,9 @@ public class AppController {
 	public String login(Model model) {
 		return "index";
 	}
+
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    public String accessDeniedPage(Model model) {
+        return "accessDenied";
+    }
 }
