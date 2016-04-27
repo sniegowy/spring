@@ -74,23 +74,6 @@
 								</div>
 							</div>
 						</div>
-						
-						<div class="row">
-							<div class="form-group col-md-12">
-								<label class="col-md-3 control-lable"
-									style="font-weight: normal;" for="role"><spring:message code="registration.role" /></label>
-								<div class="col-md-7">
-									<form:select path="role" class="form-control input-sm">
-										<form:options/>
-									</form:select>
-									<div class="has-error">
-										<form:errors path="role"
-											class="help-inline" style="color: red;"/>
-									</div>
-								</div>
-							</div>
-						</div>
-
 
 						<div class="row">
 							<div class="form-actions floatRight">

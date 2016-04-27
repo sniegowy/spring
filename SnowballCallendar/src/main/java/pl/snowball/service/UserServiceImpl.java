@@ -3,6 +3,7 @@ package pl.snowball.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao dao;
 	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
+	
 	public User login(LoginCredentials loginCredentials) {
 		return dao.login(loginCredentials);
 	}
@@ -25,6 +29,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void saveUser(User user) {
+		user.getLoginCredentials().setPassword(passwordEncoder.encode(user.getLoginCredentials().getPassword()));
 		dao.saveUser(user);
 	}
 
@@ -33,6 +38,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void updateUser(User user) {
+		user.getLoginCredentials().setPassword(passwordEncoder.encode(user.getLoginCredentials().getPassword()));
 		User entity = dao.findById(user.getId());
 		if (entity != null) {
 			entity.setFirstName(user.getFirstName());
