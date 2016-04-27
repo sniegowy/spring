@@ -1,12 +1,18 @@
 package pl.snowball.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -15,10 +21,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name="user_data")
 public class User {
-	
-	public enum Role {
-		USER, ADMIN;
-	}
 	
 	@Id
 	@Column(name="id")
@@ -38,7 +40,13 @@ public class User {
 	private String lastName;
 	
 	@Column
-	private Role role;
+	private String state = UserState.ACTIVE.getState();
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name="user_data_user_profile", 
+		joinColumns = {@JoinColumn(name = "user_id")}, 
+		inverseJoinColumns = {@JoinColumn(name = "user_profile_id")})
+	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 	
 	public LoginCredentials getLoginCredentials() {
 		return loginCredentials;
@@ -64,10 +72,16 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public Role getRole() {
-		return role;
+	public String getState() {
+		return state;
 	}
-	public void setRole(Role role) {
-		this.role = role;
+	public void setState(String state) {
+		this.state = state;
+	}
+	public Set<UserProfile> getUserProfiles() {
+		return userProfiles;
+	}
+	public void setUserProfiles(Set<UserProfile> userProfiles) {
+		this.userProfiles = userProfiles;
 	}
 }

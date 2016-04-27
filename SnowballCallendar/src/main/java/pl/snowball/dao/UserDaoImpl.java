@@ -18,11 +18,7 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 		criteria.createAlias("loginCredentials", "lc");
 		criteria.add(Restrictions.eq("lc.login", loginCredentials.getLogin()));
 		criteria.add(Restrictions.eq("lc.password", loginCredentials.getPassword()));
-		List<User> result = criteria.list();
-		if (!result.isEmpty()) {
-			return result.get(0);
-		}
-		return null;
+		return (User) criteria.uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,5 +40,12 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
         crit.add(Restrictions.eq("id", id));
         User user = (User)crit.uniqueResult();
         delete(user);
+	}
+
+	public User findByUsername(String username) {
+		Criteria criteria = createEntityCriteria();
+		criteria.createAlias("loginCredentials", "lc");
+		criteria.add(Restrictions.eq("lc.login", username));
+		return (User) criteria.uniqueResult();
 	}
 }
