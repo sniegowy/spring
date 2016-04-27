@@ -10,7 +10,9 @@
 	<tiles:putAttribute name="content">
 		<div class="content">
 			<div class="page-header">
-				<h1><spring:message code="users.schedule" /></h1>
+				<h1><spring:message code="users.schedule" /> - ${user.firstName}&nbsp;${user.lastName}</h1>
+			</div>
+			<div class="scheduleTableDiv">
 				<table class="scheduleTable">
 				  <tr><td></td>
 				  	  	<td><spring:message code="schedule.monday" /></td>
@@ -38,6 +40,8 @@
 				  <tr><td>22</td><td></td><td></td><td></td><td></td><td></td><tr>
 				</table>
 			</div>
+			<br/><br/>
+			<a href="saveSchedule.html" class="btn btn-success"><spring:message code="schedule.save" /></a>
 		</div>
 	</tiles:putAttribute>
 </tiles:insertDefinition>
@@ -45,7 +49,7 @@
 <script type="text/javascript" charset="utf-8">
     $(function () {
       var isMouseDown = false;
-      $(".scheduleTable td")
+      $(".scheduleTable td").not(":first-child")
         .mousedown(function () {
           isMouseDown = true;
           $(this).toggleClass("highlighted");

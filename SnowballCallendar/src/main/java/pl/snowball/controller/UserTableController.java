@@ -80,7 +80,9 @@ public class UserTableController {
     }
     
     @RequestMapping(value="/{id}-schedule", method = RequestMethod.GET)
-    public String loadSchedule(@PathVariable Long id) {
+    public String loadSchedule(@PathVariable Long id, ModelMap model) {
+    	User user = userService.findById(id);
+    	model.addAttribute("user", user);
         return "user/schedule";
     }
 }
