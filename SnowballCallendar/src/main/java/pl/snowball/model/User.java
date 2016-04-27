@@ -84,4 +84,13 @@ public class User {
 	public void setUserProfiles(Set<UserProfile> userProfiles) {
 		this.userProfiles = userProfiles;
 	}
+	
+	public void setUserProfiles(String[] userProfiles) {
+		Set<UserProfile> profilesSet = new HashSet<UserProfile>();
+		for (String profileStr : userProfiles) {
+			UserProfile profile = new UserProfile();
+			profile.setType(profileStr);
+			profilesSet.add(profile);
+		}
+	}
 }

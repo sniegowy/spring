@@ -16,7 +16,7 @@ public class UserProfile {
 	private Long id;
 	
 	@Column(name="type", length=15, unique=true)
-	private String type = UserProfileType.USER.getUserProfileType();
+	private String type;
 	
 	public Long getId() {
 		return id;
@@ -32,5 +32,9 @@ public class UserProfile {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public String toString() {
+		return type;
 	}
 }

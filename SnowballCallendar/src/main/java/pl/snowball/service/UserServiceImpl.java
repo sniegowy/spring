@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.snowball.dao.UserDao;
 import pl.snowball.model.LoginCredentials;
 import pl.snowball.model.User;
+import pl.snowball.model.UserProfile;
 
 @Service("userService")
 @Transactional
@@ -54,5 +55,9 @@ public class UserServiceImpl implements UserService {
 
 	public User findByUsername(String username) {
 		return dao.findByUsername(username);
+	}
+
+	public List<UserProfile> findUserProfiles() {
+		return dao.findUserProfiles();
 	}
 }

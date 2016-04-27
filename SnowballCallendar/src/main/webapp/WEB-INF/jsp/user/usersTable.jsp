@@ -24,10 +24,11 @@
 							<td>${user.firstName}</td>
 							<td>${user.lastName}</td>
 							<sec:authorize access="hasRole('ADMIN')">
-								<td style="width: 200px; text-align: right;">
+								<td style="width: 300px; text-align: right;">
 									<div class="btn-group">
-										<a href="edit-user-${user.id}.html" class="btn btn-success" type="button"><spring:message code="users.edit" /></a>
-										<a href="delete-user-${user.id}.html" class="btn btn-default" type="button"><spring:message code="users.delete" /></a>
+										<a href="${user.id}-schedule.html" class="btn btn-success" type="button"><spring:message code="users.schedule" /></a>
+										<a href="${user.id}-edit.html" class="btn btn-default" type="button"><spring:message code="users.edit" /></a>
+										<a href="${user.id}-delete.html" class="btn btn-default" type="button"><spring:message code="users.delete" /></a>
 									</div>
 								</td>
 							</sec:authorize>
@@ -35,7 +36,7 @@
 					</c:forEach>
 				</table>
 				<sec:authorize access="hasRole('ADMIN')">
-					<a href="add-user.html" class="btn btn-success"><spring:message code="users.newUser" /></a>
+					<a href="add.html" class="btn btn-success"><spring:message code="users.newUser" /></a>
 				</sec:authorize>
 			</div>
 		</div>

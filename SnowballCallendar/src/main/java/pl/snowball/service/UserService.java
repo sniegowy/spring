@@ -4,6 +4,7 @@ import java.util.List;
 
 import pl.snowball.model.LoginCredentials;
 import pl.snowball.model.User;
+import pl.snowball.model.UserProfile;
 
 public interface UserService {
 	
@@ -20,4 +21,6 @@ public interface UserService {
 	void deleteUserById(Long id);
 
 	User findByUsername(String username);
+
+	List<UserProfile> findUserProfiles();
 }

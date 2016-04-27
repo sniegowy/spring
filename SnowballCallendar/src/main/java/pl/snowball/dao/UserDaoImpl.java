@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import pl.snowball.model.LoginCredentials;
 import pl.snowball.model.User;
+import pl.snowball.model.UserProfile;
 
 @Repository("userDao")
 public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
@@ -24,6 +25,7 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 	@SuppressWarnings("unchecked")
 	public List<User> findAllUsers() {
 		Criteria criteria = createEntityCriteria();
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return (List<User>) criteria.list();
 	}
 
@@ -47,5 +49,11 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 		criteria.createAlias("loginCredentials", "lc");
 		criteria.add(Restrictions.eq("lc.login", username));
 		return (User) criteria.uniqueResult();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UserProfile> findUserProfiles() {
+		Criteria criteria = getSession().createCriteria(UserProfile.class);
+		return (List<UserProfile>) criteria.list();
 	}
 }
