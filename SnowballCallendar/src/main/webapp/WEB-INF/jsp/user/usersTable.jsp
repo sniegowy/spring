@@ -11,7 +11,7 @@
 			<div class="container-fluid">
 				<div class="page-header">
 					<h1><spring:message code="users.list" /></h1>
-				</div>
+				</div> 
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -26,9 +26,15 @@
 							<sec:authorize access="hasRole('ADMIN')">
 								<td style="width: 300px; text-align: right;">
 									<div class="btn-group">
-										<a href="${user.id}-schedule.html" class="btn btn-success" type="button"><spring:message code="users.schedule" /></a>
-										<a href="${user.id}-edit.html" class="btn btn-default" type="button"><spring:message code="users.edit" /></a>
-										<a href="${user.id}-delete.html" class="btn btn-default" type="button"><spring:message code="users.delete" /></a>
+										<a href="${user.id}-schedule.html" class="btn btn-success" type="button">
+											<spring:message code="users.schedule" />
+										</a>
+										<a href="${user.id}-edit.html" class="btn btn-default" type="button">
+											<spring:message code="users.edit" />
+										</a>
+										<a href="${user.id}-delete.html" class="btn btn-default" type="button">
+											<spring:message code="users.delete" />
+										</a>
 									</div>
 								</td>
 							</sec:authorize>

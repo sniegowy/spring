@@ -1,37 +1,41 @@
-.scheduleTable {
-	width: 100%;
-	height: 60%;
+#scheduleTableDiv {
+	max-height: 60%;
+	overflow-y: scroll;
 }
 
-.scheduleTable tr:first-child {
+#scheduleTable {
+	width: 100%;
+	min-height: 800px;
+}
+
+#scheduleTable tr:first-child {
 	background-color:#ffffff;
 }
 
-.scheduleTable tr:first-child > td {
+#scheduleTable tr:first-child > td {
 	background-color:#ffffff;
 	text-align: center;
 	font-size: 14px;
 }
 
-.scheduleTable td {
+#scheduleTable td {
 	border: 2px solid #ffffff;
 	padding: 0px;
 	width: 15%;
     background-color: #ddd;
     text-align: right;
     font-size: 12px;
-    height: 2.5em;
 }
 
-.scheduleTable td:first-child {
+#scheduleTable td:first-child, #scheduleTable td:first-child:hover {
 	width: 2%;
 	background-color: #ffffff;
 }
 
-.scheduleTable td.hover {
+#scheduleTable td:hover {
     background-color: #ccc;
 }
 
-.scheduleTable td.highlighted {
+#scheduleTable td.highlighted {
     background-color: #97E05E;
 }

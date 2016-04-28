@@ -83,6 +83,8 @@ public class UserTableController {
     public String loadSchedule(@PathVariable Long id, ModelMap model) {
     	User user = userService.findById(id);
     	model.addAttribute("user", user);
+    	model.addAttribute("startHour", 6);
+    	model.addAttribute("endHour", 23);
         return "user/schedule";
     }
 }

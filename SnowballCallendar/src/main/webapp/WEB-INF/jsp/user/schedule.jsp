@@ -6,69 +6,54 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@page isELIgnored="false"%>
 <link href="../resources/css/schedule.css" rel="stylesheet" type="text/css">
+<script>
+	var startHour = ${startHour};
+	var endHour = ${endHour};
+    var csrfToken = '${_csrf.token}';
+</script>
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="content">
 		<div class="content">
-			<div class="page-header">
+			<div class="page-header" style="margin-top: 0px;">
 				<h1><spring:message code="users.schedule" /> - ${user.firstName}&nbsp;${user.lastName}</h1>
 			</div>
-			<div class="scheduleTableDiv">
-				<table class="scheduleTable">
-				  <tr><td></td>
-				  	  	<td><spring:message code="schedule.monday" /></td>
-				  		<td><spring:message code="schedule.tuesday" /></td>
-				  		<td><spring:message code="schedule.wednesday" /></td>
-				  		<td><spring:message code="schedule.thursday" /></td>
-				  		<td><spring:message code="schedule.friday" /></td><tr>
-				  <tr><td>5</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>6</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>7</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>8</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>9</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>10</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>11</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>12</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>13</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>14</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>15</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>16</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>17</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>18</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>19</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>20</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>21</td><td></td><td></td><td></td><td></td><td></td><tr>
-				  <tr><td>22</td><td></td><td></td><td></td><td></td><td></td><tr>
-				</table>
+			<div id="scheduleTableDiv">
+				<table id='scheduleTable'>
+	  				<tr>
+	  					<td></td>
+	  	  				<td><spring:message code='schedule.monday' /></td>
+	  					<td><spring:message code='schedule.tuesday' /></td>
+	  					<td><spring:message code='schedule.wednesday' /></td>
+	  					<td><spring:message code='schedule.thursday' /></td>
+	  					<td><spring:message code='schedule.friday' /></td>
+	  				</tr>
+	  			</table>
 			</div>
 			<br/><br/>
-			<a href="saveSchedule.html" class="btn btn-success"><spring:message code="schedule.save" /></a>
+			<a class="btn btn-success" onclick="sendResult()">
+				<spring:message code="schedule.save" />
+			</a>
 		</div>
 	</tiles:putAttribute>
 </tiles:insertDefinition>
 
-<script type="text/javascript" charset="utf-8">
-    $(function () {
-      var isMouseDown = false;
-      $(".scheduleTable td").not(":first-child")
-        .mousedown(function () {
-          isMouseDown = true;
-          $(this).toggleClass("highlighted");
-          return false;
-        })
-        .mouseover(function () {
-          if (isMouseDown) {
-            $(this).toggleClass("highlighted");
-          } else {
-        	  $(this).toggleClass("hover");
-          }
-        })
-        .bind("selectstart", function () {
-          return false;
-        });
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="addTimeModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Dodawanie czasu pracy</h4>
+      </div>
+      <div class="modal-body">
+        <p>Czas</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-      $(document)
-        .mouseup(function () {
-          isMouseDown = false;
-        });
-    });
-</script>
+<script src="../resources/js/schedule.js" type="text/javascript"></script>
