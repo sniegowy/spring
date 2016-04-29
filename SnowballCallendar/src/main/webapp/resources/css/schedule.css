@@ -1,9 +1,14 @@
+#scheduleTableDiv {
+	height: 65%;
+	overflow-y: scroll;
+}
+
 #scheduleTable {
 	width: 100%;
 }
 
 #scheduleTable tr {
-	height: 2em;
+	height: 2.5em;
 }
 
 #scheduleTable tr:first-child {
@@ -36,4 +41,5 @@
 
 #scheduleTable td.highlighted {
     background-color: #97E05E;
+    border: 2px solid #97E05E;
 }

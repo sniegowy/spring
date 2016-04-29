@@ -28,20 +28,21 @@ function insertRow(i) {
 
 $(function() {
 	var isMouseDown = false;
+	
 	$("#scheduleTable td").not(":first-child").mousedown(function(e) {
 		isMouseDown = true;
-		$(this).toggleClass("highlighted");
+		document.getElementById(e.target.id).className = "highlighted";
 		startCellId = e.target.id;
 		return false;
 	}).mouseover(function(e) {
 		if (isMouseDown) {
-			$(this).toggleClass("highlighted");
+			document.getElementById(e.target.id).className = "highlighted";
 		}
 	}).bind("selectstart", function() {
 		return false;
 	});
-
-	$(document).mouseup(function(e) {
+	
+	$("#scheduleTable td").mouseup(function(e) {
 		isMouseDown = false;
 		stopCellId = e.target.id;
 		sendResult();

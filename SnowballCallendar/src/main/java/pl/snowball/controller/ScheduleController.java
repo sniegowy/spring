@@ -49,7 +49,7 @@ public class ScheduleController {
     	StringBuilder result = new StringBuilder();
     	result.append("0_0");
     	for (ScheduleTime time : list) {
-    		for (int i = time.getStartHour(); i <= time.getEndHour(); i++) {
+    		for (int i = time.getStartHour(); i < time.getEndHour(); i++) {
     			result.append(";");
     			result.append(i);
     			result.append("_");
@@ -74,7 +74,12 @@ public class ScheduleController {
 		time = new ScheduleTime();
 		time.setWeekDay(WeekDay.values()[Integer.parseInt(startCellStrings[2])-1]);
 		time.setStartHour(Integer.parseInt(startCellStrings[1]));
-		time.setEndHour(Integer.parseInt(endCellStrings[1]));
+		time.setEndHour(Integer.parseInt(endCellStrings[1])+1);
+		if (time.getStartHour() > time.getEndHour()) {
+			int hour = time.getStartHour();
+			time.setStartHour(time.getEndHour());
+			time.setEndHour(hour);
+		}
 		time.setUserId(id);
 		return "redirect:scheduleAddTime";
 	}
