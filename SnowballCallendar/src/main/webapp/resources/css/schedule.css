@@ -1,11 +1,9 @@
-#scheduleTableDiv {
-	max-height: 60%;
-	overflow-y: scroll;
-}
-
 #scheduleTable {
 	width: 100%;
-	min-height: 800px;
+}
+
+#scheduleTable tr {
+	height: 2em;
 }
 
 #scheduleTable tr:first-child {

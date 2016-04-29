@@ -1,3 +1,5 @@
+var startCellId, stopCellId;
+
 $(function() {	
 	for (i=startHour; i<=endHour; i++) {
 		insertRow(i);
@@ -22,26 +24,26 @@ $(function() {
 	$("#scheduleTable td").not(":first-child").mousedown(function(e) {
 		isMouseDown = true;
 		$(this).toggleClass("highlighted");
-		sendResult(e.target.id, "start");
+		startCellId = e.target.id;
 		return false;
 	}).mouseover(function(e) {
 		if (isMouseDown) {
 			$(this).toggleClass("highlighted");
-			sendResult(e.target.id, e.target.className == 'highlighted');
 		}
 	}).bind("selectstart", function() {
 		return false;
 	});
 
-	$(document).mouseup(function() {
-		sendResult(e.target.id, "stop");
-		$("#addTimeModal").modal("show");
+	$(document).mouseup(function(e) {
 		isMouseDown = false;
+		stopCellId = e.target.id;
+		sendResult();
+		window.location.href = userId + "-scheduleAddTime.html";
 	});
 });
 
-function sendResult(cellNameStr, isHighlightedStr) {
-	var scheduleCell = {cellName: cellNameStr, isHighlighted: isHighlightedStr};
+function sendResult() {
+	var scheduleCell = {startCell: startCellId, stopCell: stopCellId};
 	
 	$(document).ajaxSend(function(e, xhr, options) {
         xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
@@ -57,6 +59,7 @@ function sendResult(cellNameStr, isHighlightedStr) {
 	    url: "scheduleResult",
 	    data: JSON.stringify(scheduleCell),
 	    success: function(result) {
-	    }
+	    },
+	    async: false
 	});
 }
