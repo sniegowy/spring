@@ -10,6 +10,7 @@
 	var startHour = ${startHour};
 	var endHour = ${endHour};
 	var userId = ${user.id};
+	var selectedCells = '${selectedCells}';
     var csrfToken = '${_csrf.token}';
 </script>
 <tiles:insertDefinition name="defaultTemplate">

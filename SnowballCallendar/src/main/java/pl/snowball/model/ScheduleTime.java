@@ -1,15 +1,48 @@
 package pl.snowball.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import pl.snowball.enums.WeekDay;
 
+@Entity
+@Table(name="schedule_time")
 public class ScheduleTime {
 	
-	private WeekDay weekDay;
-	private int startHour;
-	private int startMinute;
-	private int endHour;
-	private int endMinute;
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
+	@Column
+	private Long userId;
+	
+	@Column
+	private WeekDay weekDay;
+	
+	@Column
+	private int startHour;
+	
+	@Column
+	private int startMinute = 0;
+	
+	@Column
+	private int endHour;
+	
+	@Column
+	private int endMinute = 0;
+	
+	
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	public WeekDay getWeekDay() {
 		return weekDay;
 	}

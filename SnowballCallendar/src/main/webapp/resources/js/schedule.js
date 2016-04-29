@@ -4,6 +4,13 @@ $(function() {
 	for (i=startHour; i<=endHour; i++) {
 		insertRow(i);
 	}
+	
+	var array = selectedCells.split(";"), i;	
+	for (i=0; i<array.length; i++) {
+		if (document.getElementById("cell_" + array[i]) != null) {
+			document.getElementById("cell_" + array[i]).className = "highlighted";
+		}
+	}
 });
 
 function insertRow(i) {
@@ -56,7 +63,7 @@ function sendResult() {
 	        'Content-Type': 'application/json' 
 	    },
 	    dataType: 'json',
-	    url: "scheduleResult",
+	    url: userId + "-scheduleResult",
 	    data: JSON.stringify(scheduleCell),
 	    success: function(result) {
 	    },

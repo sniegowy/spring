@@ -78,13 +78,4 @@ public class UserTableController {
         userService.deleteUserById(id);
         return "redirect:usersTable";
     }
-    
-    @RequestMapping(value="/{id}-schedule", method = RequestMethod.GET)
-    public String loadSchedule(@PathVariable Long id, ModelMap model) {
-    	User user = userService.findById(id);
-    	model.addAttribute("user", user);
-    	model.addAttribute("startHour", 6);
-    	model.addAttribute("endHour", 23);
-        return "user/schedule";
-    }
 }

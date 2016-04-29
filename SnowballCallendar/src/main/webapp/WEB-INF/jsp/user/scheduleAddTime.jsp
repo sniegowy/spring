@@ -14,7 +14,8 @@
 			<div class="row">
 				<div class="col-md-3"></div>
 				<div class="col-md-6">
-					<form:form method="POST" modelAttribute="scheduleTime" class="form-horizontal">			
+					<form:form method="POST" modelAttribute="scheduleTime" class="form-horizontal">		
+						<form:input type="hidden" path="userId" id="userId" />	
 						<div class="row">
 							<div class="form-group col-md-12">
 								<label class="col-md-3 control-lable" for="firstName"
