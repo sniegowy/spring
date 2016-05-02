@@ -58,8 +58,7 @@ $(function() {
 		if (isMouseDown) {
 			isMouseDown = false;
 			stopCellId = e.target.id;
-			sendResult();
-			window.location.href = userId + "-scheduleAddTile.html";
+			window.location.href = userId + '-' + startCellId + '-' + stopCellId + "-scheduleAddTile.html";
 		}
 	});
 });

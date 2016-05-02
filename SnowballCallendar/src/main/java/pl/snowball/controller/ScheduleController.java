@@ -1,18 +1,14 @@
 package pl.snowball.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.snowball.enums.DayOfWeek;
 import pl.snowball.model.ScheduleTile;
@@ -46,7 +42,7 @@ public class ScheduleController {
         return "user/schedule";
 	}
 	
-	@RequestMapping(value="/{userId}-scheduleResult", method=RequestMethod.GET)
+	/*@RequestMapping(value="/{userId}-scheduleResult", method=RequestMethod.GET)
 	public String prepareScheduleResult(ModelMap model, @PathVariable Long userId) {
 		return "user/scheduleResult";
 	}
@@ -58,19 +54,19 @@ public class ScheduleController {
 		String endCellId = json.getString("stopCell");
 		tile = scheduleTileService.findNewTileData(userId, startCellId, endCellId);
 		return "redirect:scheduleAddTile";
-	}
+	}*/
 	
-	@RequestMapping(value="/{userId}-scheduleAddTile", method=RequestMethod.GET)
-	public String prepareAddNewScheduleData(@PathVariable Long userId, ModelMap model) {
-		//tile was created in getScheduleResult
+	@RequestMapping(value="/{userId}-{startCellId}-{endCellId}-scheduleAddTile", method=RequestMethod.GET)
+	public String prepareAddNewScheduleData(ModelMap model, @PathVariable Long userId, @PathVariable("startCellId") String startCellId, @PathVariable("endCellId") String endCellId) {
+		tile = scheduleTileService.findNewTileData(userId, startCellId, endCellId);
 		model.addAttribute("scheduleTime", tile);
 		model.addAttribute("daysOfWeek", DayOfWeek.values());
 		model.addAttribute("userId", userId);
 		return "user/scheduleAddTile";
 	}
 	
-	@RequestMapping(value="/{userId}-scheduleAddTile", method = RequestMethod.POST)
-    public String saveScheduleTime(@Valid ScheduleTile scheduleTime, BindingResult result, ModelMap model, @PathVariable Long userId) {
+	@RequestMapping(value="/{userId}-{startCellId}-{endCellId}-scheduleAddTile", method = RequestMethod.POST)
+    public String saveScheduleTime(@Valid ScheduleTile scheduleTime, BindingResult result, ModelMap model) {
         return saveScheduleTile(scheduleTime, result, model);
     }
 	
@@ -101,13 +97,13 @@ public class ScheduleController {
 	
 	@RequestMapping(value="/{userId}-{cellName}-scheduleDelete", method = RequestMethod.GET)
     public String prepareScheduleTileDelete(@PathVariable("userId") Long userId, @PathVariable("cellName") String cellName, ModelMap model) {
-		scheduleTileService.findScheduleTile(userId, cellName);
+		tile = scheduleTileService.findScheduleTile(userId, cellName);
 		scheduleTileService.deleteScheduleTime(tile);
 		return reloadSchedule(userId, model);
     }
      
     @RequestMapping(value="/{userId}-{cellName}-scheduleDelete", method = RequestMethod.POST)
-    public String deleteScheduleTile(@Valid User user, BindingResult result, ModelMap model, @PathVariable("userId") Long userId, @PathVariable("cellName") String cellName) {
+    public String deleteScheduleTile(@Valid User user, BindingResult result, ModelMap model, @PathVariable("userId") Long userId) {
     	return reloadSchedule(userId, model);
     }
 }
