@@ -12,4 +12,10 @@ public interface ScheduleTileService {
 	
 	List<ScheduleTile> findUsersScheduleTime(Long userId);
 	
+	String findSelectedCells(Long userId);
+	
+	ScheduleTile findNewTileData(Long userId, String startCellId, String endCellId);
+	
+	ScheduleTile findScheduleTile(Long userId, String cellName);
+	
 }

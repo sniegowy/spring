@@ -12,6 +12,8 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="/Callendar/user/usersTable.html"><spring:message
 								code="menu.users" /></a></li>
+					<li class="active"><a href="/Callendar/calendar/calendar.html"><spring:message
+								code="menu.calendar" /></a></li>
 				</ul>
 				<div style="text-align:right; vertical-align: middle; padding-right: 0px;">
 					<spring:message code="menu.loggedAs" />
