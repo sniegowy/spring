@@ -1,9 +1,8 @@
 package pl.snowball.dao;
 
 import java.io.Serializable;
-
 import java.lang.reflect.ParameterizedType;
- 
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,6 +34,10 @@ public abstract class AbstractDao<PK extends Serializable, T> {
  
     public void delete(T entity) {
         getSession().delete(entity);
+    }
+    
+    public void saveOrUpdate(T entity) {
+    	getSession().saveOrUpdate(entity);
     }
      
     protected Criteria createEntityCriteria(){

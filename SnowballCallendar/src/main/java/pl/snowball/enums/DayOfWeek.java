@@ -1,5 +1,5 @@
 package pl.snowball.enums;
 
-public enum WeekDay {
+public enum DayOfWeek {
 	monday, tuesday, wednesday, thursday, friday;
 }

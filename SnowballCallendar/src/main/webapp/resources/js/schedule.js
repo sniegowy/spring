@@ -7,7 +7,14 @@ $(function() {
 	
 	var array = selectedCells.split(";"), i;	
 	for (i=0; i<array.length; i++) {
-		if (document.getElementById("cell_" + array[i]) != null) {
+		if (array[i].startsWith("firstCell")) {
+			cellDataArray = array[i].split(",");
+			var cellName = "cell_" + cellDataArray[2];
+			document.getElementById(cellName).className = "highlightedFirstCell";
+			document.getElementById(cellName).innerHTML = 
+				'<table style="width: 100%;"><tr><td style="width: 50%; background-color: #86C472; text-align: left; border-width: 0px; color: #ffffff;">' + cellDataArray[1] 
+				+ '</td><td style="text-align: right; background-color: #86C472; border-width: 0px;"><a href="' + userId + '-' + cellName + '-scheduleDelete.html">x</a></td></tr></table>';
+		} else if (document.getElementById("cell_" + array[i]) != null) {
 			document.getElementById("cell_" + array[i]).className = "highlighted";
 		}
 	}
@@ -30,10 +37,15 @@ $(function() {
 	var isMouseDown = false;
 	
 	$("#scheduleTable td").not(":first-child").mousedown(function(e) {
-		isMouseDown = true;
-		document.getElementById(e.target.id).className = "highlighted";
-		startCellId = e.target.id;
-		return false;
+		if (document.getElementById(e.target.id).className == "highlighted") {
+			window.location.href = userId + '-' + e.target.id + "-scheduleEdit.html";
+			return false;
+		} else {
+			isMouseDown = true;
+			document.getElementById(e.target.id).className = "highlighted";
+			startCellId = e.target.id;
+			return false;
+		}
 	}).mouseover(function(e) {
 		if (isMouseDown) {
 			document.getElementById(e.target.id).className = "highlighted";
@@ -43,10 +55,12 @@ $(function() {
 	});
 	
 	$("#scheduleTable td").mouseup(function(e) {
-		isMouseDown = false;
-		stopCellId = e.target.id;
-		sendResult();
-		window.location.href = userId + "-scheduleAddTime.html";
+		if (isMouseDown) {
+			isMouseDown = false;
+			stopCellId = e.target.id;
+			sendResult();
+			window.location.href = userId + "-scheduleAddTile.html";
+		}
 	});
 });
 

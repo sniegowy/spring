@@ -16,92 +16,146 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pl.snowball.enums.WeekDay;
-import pl.snowball.model.ScheduleTime;
+import pl.snowball.enums.DayOfWeek;
+import pl.snowball.model.ScheduleTile;
 import pl.snowball.model.User;
-import pl.snowball.service.ScheduleTimeService;
+import pl.snowball.service.ScheduleTileService;
 import pl.snowball.service.UserService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/user")
 public class ScheduleController {
 	
 	@Autowired
-	ScheduleTimeService scheduleTimeService;
+	ScheduleTileService scheduleTimeService;
 	
 	@Autowired
 	UserService userService;
 	
-	ScheduleTime time;
+	ScheduleTile tile;
 	
-    @RequestMapping(value="/user/{id}-schedule", method = RequestMethod.GET)
+    @RequestMapping(value="/{id}-schedule", method = RequestMethod.GET)
     public String loadSchedule(@PathVariable Long id, ModelMap model) {
-    	User user = userService.findById(id);
+    	return loadScheduleInner(id, model);
+    }
+
+	private String loadScheduleInner(Long id, ModelMap model) {
+		User user = userService.findById(id);
     	model.addAttribute("user", user);
-    	model.addAttribute("startHour", 5);
-    	model.addAttribute("endHour", 22);
+    	model.addAttribute("startHour", 7);
+    	model.addAttribute("endHour", 17);
     	model.addAttribute("selectedCells", findSelectedCells(id));
         return "user/schedule";
-    }
+	}
     
     private String findSelectedCells(Long userId) {
-    	List<ScheduleTime> list = scheduleTimeService.findUsersScheduleTime(userId);
+    	List<ScheduleTile> list = scheduleTimeService.findUsersScheduleTime(userId);
     	StringBuilder result = new StringBuilder();
     	result.append("0_0");
-    	for (ScheduleTime time : list) {
-    		for (int i = time.getStartHour(); i < time.getEndHour(); i++) {
+    	for (ScheduleTile tile : list) {
+    		result.append(";firstCell,");
+    		result.append(tile.getTimeStr());
+    		result.append(",");
+			result.append(tile.getStartHour());
+			result.append("_");
+			result.append(tile.getDayOfWeek().ordinal() + 1);
+    		for (int i = tile.getStartHour() + 1; i < tile.getEndHour(); i++) {
     			result.append(";");
     			result.append(i);
     			result.append("_");
-    			result.append(time.getWeekDay().ordinal() + 1);
+    			result.append(tile.getDayOfWeek().ordinal() + 1);
     		}
     	}
     	return result.toString();
     }
 	
-	@RequestMapping(value="/user/{id}-scheduleResult", method=RequestMethod.GET)
+	@RequestMapping(value="/{id}-scheduleResult", method=RequestMethod.GET)
 	public String getScheduleData(ModelMap model, @PathVariable Long id) {
 		return "user/scheduleResult";
 	}
 	
-	@RequestMapping(value="/user/{id}-scheduleResult", method={RequestMethod.POST})
+	@RequestMapping(value="/{id}-scheduleResult", method={RequestMethod.POST})
 	public @ResponseBody String getScheduleResult(@RequestBody String scheduleCell, HttpServletRequest request, @PathVariable Long id) {
 		JSONObject json = new JSONObject(scheduleCell);
 		String startCellId = json.getString("startCell");
 		String endCellId = json.getString("stopCell");
 		String[] startCellStrings = startCellId.split("_");
 		String[] endCellStrings = endCellId.split("_");
-		time = new ScheduleTime();
-		time.setWeekDay(WeekDay.values()[Integer.parseInt(startCellStrings[2])-1]);
-		time.setStartHour(Integer.parseInt(startCellStrings[1]));
-		time.setEndHour(Integer.parseInt(endCellStrings[1])+1);
-		if (time.getStartHour() > time.getEndHour()) {
-			int hour = time.getStartHour();
-			time.setStartHour(time.getEndHour());
-			time.setEndHour(hour);
+		tile = new ScheduleTile();
+		tile.setDayOfWeek(DayOfWeek.values()[Integer.parseInt(startCellStrings[2])-1]);
+		tile.setStartHour(Integer.parseInt(startCellStrings[1]));
+		tile.setEndHour(Integer.parseInt(endCellStrings[1])+1);
+		if (tile.getStartHour() > tile.getEndHour()) {
+			int hour = tile.getStartHour();
+			tile.setStartHour(tile.getEndHour());
+			tile.setEndHour(hour);
 		}
-		time.setUserId(id);
-		return "redirect:scheduleAddTime";
+		tile.setUserId(id);
+		return "redirect:scheduleAddTile";
 	}
 	
-	@RequestMapping(value="/user/{id}-scheduleAddTime", method=RequestMethod.GET)
+	@RequestMapping(value="/{id}-scheduleAddTile", method=RequestMethod.GET)
 	public String addScheduleData(@PathVariable Long id, ModelMap model) {
-		model.addAttribute("scheduleTime", time);
-		model.addAttribute("weekDays", WeekDay.values());
+		model.addAttribute("scheduleTime", tile);
+		model.addAttribute("daysOfWeek", DayOfWeek.values());
 		model.addAttribute("userId", id);
-		return "user/scheduleAddTime";
+		return "user/scheduleAddTile";
 	}
 	
-	@RequestMapping(value="/user/{id}-scheduleAddTime", method = RequestMethod.POST)
-    public String saveScheduleTime(@Valid ScheduleTime scheduleTime, BindingResult result, ModelMap model, @PathVariable Long id) {
+	@RequestMapping(value="/{id}-scheduleAddTile", method = RequestMethod.POST)
+    public String saveScheduleTime(@Valid ScheduleTile scheduleTime, BindingResult result, ModelMap model, @PathVariable Long id) {
+        return saveScheduleTile(scheduleTime, result, model);
+    }
+	
+	@RequestMapping(value="/{userId}-{cellName}-scheduleEdit", method=RequestMethod.GET)
+	public String editScheduleTileGet(ModelMap model, @PathVariable("userId") Long userId, @PathVariable("cellName") String cellName) {
+		findScheduleTile(userId, cellName);
+		if (tile != null) {
+			model.addAttribute("scheduleTime", tile);
+			model.addAttribute("daysOfWeek", DayOfWeek.values());
+			model.addAttribute("userId", userId);
+		}
+		return "user/scheduleAddTile";
+	}
 
-        if (result.hasErrors()) {
-            return "user/scheduleAddTime";
+	private void findScheduleTile(Long userId, String cellName) {
+		this.tile = null;
+		String[] cellArray = cellName.split("_");
+		int hour = Integer.parseInt(cellArray[1]);
+		DayOfWeek dayOfWeek = DayOfWeek.values()[Integer.parseInt(cellArray[2]) - 1];
+		List<ScheduleTile> list = scheduleTimeService.findUsersScheduleTime(userId);
+		for (ScheduleTile tile : list) {
+			if (tile.getDayOfWeek().equals(dayOfWeek)) {
+				if (hour >= tile.getStartHour() && hour <= tile.getEndHour()) {
+					this.tile = tile;
+				}
+			}
+		}
+	}
+	
+	@RequestMapping(value="/{userId}-{cellName}-scheduleEdit", method={RequestMethod.POST})
+	public String saveScheduleTileAfterEdit(@Valid ScheduleTile scheduleTime, BindingResult result, ModelMap model) {
+		return saveScheduleTile(scheduleTime, result, model);
+	}
+
+	private String saveScheduleTile(ScheduleTile scheduleTime, BindingResult result, ModelMap model) {
+		if (result.hasErrors()) {
+            return "user/scheduleAddTile";
         }
- 
-        scheduleTimeService.saveScheduleTime(scheduleTime);
-        
+        scheduleTimeService.saveScheduleTime(scheduleTime);    
         model.addAttribute("success", "Updated successfully");
         return "user/registrationSuccess";
+	}
+	
+	@RequestMapping(value="/{userId}-{cellName}-scheduleDelete", method = RequestMethod.GET)
+    public String deleteScheduleTileGet(@PathVariable("userId") Long userId, @PathVariable("cellName") String cellName, ModelMap model) {
+		findScheduleTile(userId, cellName);
+		scheduleTimeService.deleteScheduleTime(tile);
+		return loadScheduleInner(userId, model);
+    }
+     
+    @RequestMapping(value="/{userId}-{cellName}-scheduleDelete", method = RequestMethod.POST)
+    public String deleteScheduleTilePost(@Valid User user, BindingResult result, ModelMap model, @PathVariable("userId") Long userId, @PathVariable("cellName") String cellName) {
+    	return loadScheduleInner(userId, model);
     }
 }

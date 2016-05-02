@@ -1,14 +1,15 @@
 #scheduleTableDiv {
 	height: 65%;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 #scheduleTable {
 	width: 100%;
+	height: 99%;
 }
 
 #scheduleTable tr {
-	height: 2.5em;
+	min-height: 2.5em;
 }
 
 #scheduleTable tr:first-child {
@@ -22,11 +23,12 @@
 }
 
 #scheduleTable td {
+	text-align: left;
 	border: 2px solid #ffffff;
 	padding: 0px;
 	width: 15%;
     background-color: #ddd;
-    text-align: right;
+    text-align: left;
     font-size: 12px;
 }
 
@@ -39,7 +41,25 @@
     background-color: #ccc;
 }
 
+#scheduleTable td.highlightedFirstCell {
+	background-color: #86C472;
+	border: 2px solid #86C472;
+	color: white;
+    padding: 0 10px;
+    font-size: 15px;
+}
+
 #scheduleTable td.highlighted {
-    background-color: #97E05E;
-    border: 2px solid #97E05E;
+    background-color: #86C472;
+    border: 2px solid #86C472;
+}
+
+#scheduleTable td.highlightedFirstCell a {
+	color: #A94442;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#scheduleTable td.highlightedFirstCell a:hover{
+    text-decoration: none;
 }

@@ -15,20 +15,21 @@
 				<div class="col-md-3"></div>
 				<div class="col-md-6">
 					<form:form method="POST" modelAttribute="scheduleTime" class="form-horizontal">		
+						<form:input type="hidden" path="id" id="id" />
 						<form:input type="hidden" path="userId" id="userId" />	
 						<div class="row">
 							<div class="form-group col-md-12">
 								<label class="col-md-3 control-lable" for="firstName"
 									style="font-weight: normal;"><spring:message code="schedule.weekDay" /></label>
 								<div class="col-md-7">
-									<form:select path="weekDay" class="form-control input-sm">
-										<c:forEach var="weekDay" items="${weekDays}">
-											<c:set value="schedule.${weekDay}" var="weekDayMsg"  />
-											<form:option value="${weekDay}"><spring:message code="${weekDayMsg}"/></form:option>
+									<form:select path="dayOfWeek" class="form-control input-sm">
+										<c:forEach var="dayOfWeek" items="${daysOfWeek}">
+											<c:set value="schedule.${dayOfWeek}" var="dayOfWeekMsg"  />
+											<form:option value="${dayOfWeek}"><spring:message code="${dayOfWeekMsg}"/></form:option>
 										</c:forEach>
 									</form:select>
 									<div class="has-error">
-										<form:errors path="weekDay" class="help-inline" style="color: red;"/>
+										<form:errors path="dayOfWeek" class="help-inline" style="color: red;"/>
 									</div>
 								</div>
 							</div>
@@ -38,14 +39,14 @@
 								<label class="col-md-3 control-lable" for="firstName"
 									style="font-weight: normal;"><spring:message code="schedule.startTime" /></label>
 								<div class="col-md-7">
-									<div class="col-md-2">
+									<div class="col-md-2" style="padding: 0px;">
 										<form:input type="text" path="startHour" id="startHour"
 											class="form-control input-sm" />
 									</div>
 									<div class="col-md-1">
 									:
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-2" style="padding: 0px;">
 										<form:input type="text" path="startMinute" id="startMinute"
 											class="form-control input-sm" />
 									</div>
@@ -64,14 +65,14 @@
 								<label class="col-md-3 control-lable" for="firstName"
 									style="font-weight: normal;"><spring:message code="schedule.endTime" /></label>
 								<div class="col-md-7">
-									<div class="col-md-2">
+									<div class="col-md-2" style="padding: 0px;">
 										<form:input type="text" path="endHour" id="endHour"
 											class="form-control input-sm" />
 									</div>
 									<div class="col-md-1">
 									:
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-2" style="padding: 0px;">
 										<form:input type="text" path="endMinute" id="endMinute"
 											class="form-control input-sm" />
 									</div>
