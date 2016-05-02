@@ -12,8 +12,16 @@ $(function() {
 			var cellName = "cell_" + cellDataArray[2];
 			document.getElementById(cellName).className = "highlightedFirstCell";
 			document.getElementById(cellName).innerHTML = 
-				'<table style="width: 100%;"><tr><td style="width: 50%; background-color: #86C472; text-align: left; border-width: 0px; color: #ffffff;">' + cellDataArray[1] 
-				+ '</td><td style="text-align: right; background-color: #86C472; border-width: 0px;"><a href="' + userId + '-' + cellName + '-scheduleDelete.html">x</a></td></tr></table>';
+				'<table style="width: 100%;">'
+				+ '	<tr>'
+				+ '		<td style="width: 50%; background-color: #86C472; text-align: left; border-width: 0px; color: #ffffff;">'
+				+ 			cellDataArray[1] 
+				+ '		</td>'
+				+ '		<td style="text-align: right; background-color: #86C472; border-width: 0px;">'
+				+ '			<a href="' + userId + '-' + cellName + '-scheduleDelete.html">x</a>'
+				+ '		</td>'
+				+ '	</tr>'
+				+ '</table>';
 		} else if (document.getElementById("cell_" + array[i]) != null) {
 			document.getElementById("cell_" + array[i]).className = "highlighted";
 		}

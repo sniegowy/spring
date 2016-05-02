@@ -12,7 +12,7 @@ public interface ScheduleTileService {
 	
 	List<ScheduleTile> findUsersScheduleTime(Long userId);
 	
-	String findSelectedCells(Long userId);
+	String findSelectedCells(Long userId, boolean highlightFirstCell);
 	
 	ScheduleTile findNewTileData(Long userId, String startCellId, String endCellId);
 	

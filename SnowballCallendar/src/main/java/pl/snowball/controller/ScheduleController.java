@@ -38,7 +38,7 @@ public class ScheduleController {
     	model.addAttribute("user", user);
     	model.addAttribute("startHour", 6);
     	model.addAttribute("endHour", 18);
-    	model.addAttribute("selectedCells", scheduleTileService.findSelectedCells(userId));
+    	model.addAttribute("selectedCells", scheduleTileService.findSelectedCells(userId, true));
         return "user/schedule";
 	}
 	

@@ -93,4 +93,8 @@ public class User {
 			profilesSet.add(profile);
 		}
 	}
+	
+	public String getDisplayName() {
+		return firstName + " " + lastName;
+	}
 }

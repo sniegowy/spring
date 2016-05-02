@@ -29,22 +29,27 @@ public class ScheduleTileServiceImpl implements ScheduleTileService {
 		dao.deleteScheduleTime(scheduleTile);
 	}
 
-	public String findSelectedCells(Long userId) {
+	public String findSelectedCells(Long userId, boolean highlightFirstCell) {
 		List<ScheduleTile> list = this.findUsersScheduleTime(userId);
     	StringBuilder result = new StringBuilder();
     	result.append("0_0");
     	for (ScheduleTile tile : list) {
-    		result.append(";firstCell,");
-    		result.append(tile.getTimeStr());
-    		result.append(",");
-			result.append(tile.getStartHour());
-			result.append("_");
-			result.append(tile.getDayOfWeek().ordinal() + 1);
-    		for (int i = tile.getStartHour() + 1; i < tile.getEndHour(); i++) {
+    		int i = tile.getStartHour();
+    		if (highlightFirstCell) {
+	    		result.append(";firstCell,");
+	    		result.append(tile.getTimeStr());
+	    		result.append(",");
+				result.append(tile.getStartHour());
+				result.append("_");
+				result.append(tile.getDayOfWeek().ordinal() + 1);
+				i++;
+    		}
+    		while (i < tile.getEndHour()) {
     			result.append(";");
     			result.append(i);
     			result.append("_");
     			result.append(tile.getDayOfWeek().ordinal() + 1);
+    			i++;
     		}
     	}
     	return result.toString();
