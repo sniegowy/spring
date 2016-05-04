@@ -9,6 +9,13 @@ $(function() {
 			document.getElementById("cell_" + array[i]).className = "highlighted";
 		}
 	}
+	
+	var array = eventCells.split(";"), i;
+	for (i = 0; i < array.length; i++) {
+		if (document.getElementById("cell_" + array[i]) != null) {
+			document.getElementById("cell_" + array[i]).className = "event";
+		}
+	}
 });
 
 function insertRow(i) {
@@ -29,9 +36,12 @@ $(function() {
 	
 	$("#scheduleTable td").not(":first-child").mousedown(function(e) {
 		if (document.getElementById(e.target.id).className == "highlighted") {
-			isMouseDown = true;
-			document.getElementById(e.target.id).className = "event";
-			return false;
+			if (document.getElementById(e.target.id).className != "event") {
+				isMouseDown = true;
+				document.getElementById(e.target.id).className = "event";
+				startCellId = e.target.id;
+				return false;
+			}
 		} 
 	}).mouseover(function(e) {
 		if (isMouseDown) {
@@ -44,7 +54,8 @@ $(function() {
 	$("#scheduleTable td").mouseup(function(e) {
 		if (isMouseDown) {
 			isMouseDown = false;
-			//window.location.href = userId + '-' + startCellId + '-' + stopCellId + "-scheduleAddTile.html";
+			stopCellId = e.target.id;
+			window.location.href = userId + '-' + startCellId + '-' + stopCellId + "-addCalendarTile.html";
 		}
 	});
 });

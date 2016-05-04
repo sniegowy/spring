@@ -5,17 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import pl.snowball.enums.DayOfWeek;
 
 @Entity
 @Table(name = "schedule_time")
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class ScheduleTile {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column

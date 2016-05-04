@@ -11,6 +11,7 @@
 	var endHour = ${endHour};
 	var userId = ${user.id};
 	var selectedCells = '${selectedCells}';
+	var eventCells = '${eventCells}';
 </script>
 <tiles:insertDefinition name="defaultTemplate">
 	<tiles:putAttribute name="content">

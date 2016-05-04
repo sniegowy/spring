@@ -55,7 +55,7 @@ public class ScheduleTileServiceImpl implements ScheduleTileService {
     	return result.toString();
 	}
 
-	public ScheduleTile findNewTileData(Long userId, String startCellId, String endCellId) {
+	public ScheduleTile fillNewTileData(Long userId, String startCellId, String endCellId) {
 		String[] startCellStrings = startCellId.split("_");
 		String[] endCellStrings = endCellId.split("_");
 		ScheduleTile tile = new ScheduleTile();

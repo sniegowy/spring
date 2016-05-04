@@ -58,7 +58,7 @@ public class ScheduleController {
 	
 	@RequestMapping(value="/{userId}-{startCellId}-{endCellId}-scheduleAddTile", method=RequestMethod.GET)
 	public String prepareAddNewScheduleData(ModelMap model, @PathVariable Long userId, @PathVariable("startCellId") String startCellId, @PathVariable("endCellId") String endCellId) {
-		tile = scheduleTileService.findNewTileData(userId, startCellId, endCellId);
+		tile = scheduleTileService.fillNewTileData(userId, startCellId, endCellId);
 		model.addAttribute("scheduleTime", tile);
 		model.addAttribute("daysOfWeek", DayOfWeek.values());
 		model.addAttribute("userId", userId);

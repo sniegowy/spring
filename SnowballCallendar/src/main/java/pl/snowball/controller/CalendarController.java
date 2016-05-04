@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import pl.snowball.enums.DayOfWeek;
+import pl.snowball.model.CalendarTile;
 import pl.snowball.model.User;
+import pl.snowball.service.CalendarTileService;
 import pl.snowball.service.ScheduleTileService;
 import pl.snowball.service.UserService;
 
@@ -20,6 +23,9 @@ public class CalendarController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	CalendarTileService calendarTileService;
 	
 	@Autowired
 	ScheduleTileService scheduleTileService;
@@ -39,7 +45,7 @@ public class CalendarController {
     }
     
     @RequestMapping(value="/{userId}-calendar", method = RequestMethod.GET)
-    public String findUserSchedule(ModelMap model,  @PathVariable("userId") Long userId) {
+    public String findUserSchedule(ModelMap model, @PathVariable("userId") Long userId) {
         User user = userService.findById(userId);
         model.addAttribute("userSelected", true);
         model.addAttribute("users", userService.findAllUsers());
@@ -47,11 +53,17 @@ public class CalendarController {
     	model.addAttribute("startHour", 6);
     	model.addAttribute("endHour", 18);
     	model.addAttribute("selectedCells", scheduleTileService.findSelectedCells(userId, false));
+    	model.addAttribute("eventCells", calendarTileService.findSelectedCells(userId, false));
         return "calendar/calendar";
     }
  
-    @RequestMapping(value="/{userId}-calendar", method = RequestMethod.POST)
-    public String saveUser(@Valid User user, BindingResult result, ModelMap model) {
-    	return "redirect:" + user.getId() + "-calendar";
-    }
+    @RequestMapping(value="/{userId}-{startCellId}-{endCellId}-addCalendarTile", method=RequestMethod.GET)
+	public String addCalendarTile(ModelMap model, @PathVariable Long userId, @PathVariable("startCellId") String startCellId, @PathVariable("endCellId") String endCellId) {
+    	CalendarTile tile = calendarTileService.fillNewTileData(userId, startCellId, endCellId);
+		model.addAttribute("scheduleTime", tile);
+		model.addAttribute("daysOfWeek", DayOfWeek.values());
+		model.addAttribute("userId", userId);
+		calendarTileService.saveCalendarTile(tile);
+		return "redirect:" + userId + "-calendar";
+	}
 }
