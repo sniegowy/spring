@@ -17,9 +17,6 @@ public class CalendarTileServiceImpl implements CalendarTileService {
 
 	@Autowired
 	private CalendarTileDao dao;
-	
-	@Autowired
-	private ScheduleTileService scheduleTileService;
 
 	public CalendarTile fillNewTileData(Long userId, String startCellId, String endCellId) {
 		//return (CalendarTile) scheduleTileService.fillNewTileData(userId, startCellId, endCellId);

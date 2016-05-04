@@ -8,6 +8,6 @@ public interface CalendarTileService {
 
 	void saveCalendarTile(CalendarTile tile);
 	
-	String findSelectedCells(Long userId, boolean highlightFirstCell)
+	String findSelectedCells(Long userId, boolean highlightFirstCell);
 	
 }
