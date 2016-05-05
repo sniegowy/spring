@@ -53,8 +53,13 @@ public class CalendarController {
     	model.addAttribute("startHour", 6);
     	model.addAttribute("endHour", 18);
     	model.addAttribute("selectedCells", scheduleTileService.findSelectedCells(userId, false));
-    	model.addAttribute("eventCells", calendarTileService.findSelectedCells(userId, false));
+    	model.addAttribute("eventCells", calendarTileService.findSelectedCells(userId));
         return "calendar/calendar";
+    }
+    
+    @RequestMapping(value="/{userId}-calendar", method = RequestMethod.POST)
+    public String selectNextUser(@Valid User user, BindingResult result, ModelMap model) {
+        return "redirect:" + user.getId() + "-calendar";
     }
  
     @RequestMapping(value="/{userId}-{startCellId}-{endCellId}-addCalendarTile", method=RequestMethod.GET)

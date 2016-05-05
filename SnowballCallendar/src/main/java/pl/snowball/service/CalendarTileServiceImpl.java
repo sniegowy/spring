@@ -16,28 +16,15 @@ public class CalendarTileServiceImpl implements CalendarTileService {
 	@Autowired
 	private CalendarTileDao dao;
 	
-	public String findSelectedCells(Long userId, boolean highlightFirstCell) {
+	public String findSelectedCells(Long userId) {
 		List<CalendarTile> list = this.findUserCalendarTiles(userId);
-    	StringBuilder result = new StringBuilder();
-    	result.append("0_0");
+    	String result = "0_0";
     	for (CalendarTile tile : list) {
-    		int i = tile.getStartHour();
-    		if (highlightFirstCell) {
-	    		result.append(";firstCell,");
-	    		result.append(tile.getDisplayTime());
-	    		result.append(",");
-				result.append(tile.getCellId());
-				i++;
-    		}
-    		while (i < tile.getEndHour()) {
-    			result.append(";");
-    			result.append(i);
-    			result.append("_");
-    			result.append(tile.getDayOfWeek().ordinal() + 1);
-    			i++;
+    		for (int i = tile.getStartHour(); i <tile.getEndHour(); i++) {
+    			result += ";" + tile.getCellId(i);
     		}
     	}
-    	return result.toString();
+    	return result;
 	}
 
 	public void saveCalendarTile(CalendarTile tile) {

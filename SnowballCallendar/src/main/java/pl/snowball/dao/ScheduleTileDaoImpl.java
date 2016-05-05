@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import pl.snowball.enums.DayOfWeek;
 import pl.snowball.model.ScheduleTile;
 
 @Repository("scheduleTileDao")
@@ -24,5 +25,14 @@ public class ScheduleTileDaoImpl extends AbstractDao<Long, ScheduleTile> impleme
 
 	public void deleteScheduleTime(ScheduleTile scheduleTile) {
         delete(scheduleTile);
+	}
+
+	public ScheduleTile findScheduleTile(Long userId, int hour, DayOfWeek dayOfWeek) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("userId", userId));
+		criteria.add(Restrictions.eq("dayOfWeek", dayOfWeek));
+		criteria.add(Restrictions.le("startHour", hour));
+		criteria.add(Restrictions.ge("endHour", hour));
+		return (ScheduleTile) criteria.uniqueResult();
 	}
 }

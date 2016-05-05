@@ -119,7 +119,16 @@ public class Tile {
 		return String.format("%02d", minutes);
 	}
 	
-	public String getCellId() {		
+	public String getStartCellId() {		
 		return startHour + "_" + Integer.toString(dayOfWeek.ordinal() + 1);
+	}
+	
+	/**
+	 * Returns cell id
+	 * @param cellNumber - startHour + id
+	 * @return
+	 */
+	public String getCellId(int cellNumber) {
+		return Integer.toString(cellNumber) + "_" + Integer.toString(dayOfWeek.ordinal() + 1);
 	}
 }

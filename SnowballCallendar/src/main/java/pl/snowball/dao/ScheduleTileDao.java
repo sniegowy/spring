@@ -2,6 +2,7 @@ package pl.snowball.dao;
 
 import java.util.List;
 
+import pl.snowball.enums.DayOfWeek;
 import pl.snowball.model.ScheduleTile;
 
 public interface ScheduleTileDao {
@@ -12,4 +13,5 @@ public interface ScheduleTileDao {
 
 	void deleteScheduleTime(ScheduleTile scheduleTile);
 
+	ScheduleTile findScheduleTile(Long userId, int hour, DayOfWeek dayOfWeek);
 }

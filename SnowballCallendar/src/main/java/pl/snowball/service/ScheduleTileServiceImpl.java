@@ -12,7 +12,7 @@ import pl.snowball.model.ScheduleTile;
 
 @Service("scheduleTileService")
 @Transactional
-public class ScheduleTileServiceImpl implements ScheduleTileService {
+public class ScheduleTileServiceImpl implements ScheduleTileService, findScheduleTileByDayOfWeekAndHour {
 	
 	@Autowired
 	private ScheduleTileDao dao;
@@ -31,41 +31,28 @@ public class ScheduleTileServiceImpl implements ScheduleTileService {
 
 	public String findSelectedCells(Long userId, boolean highlightFirstCell) {
 		List<ScheduleTile> list = this.findUsersScheduleTime(userId);
-    	StringBuilder result = new StringBuilder();
-    	result.append("0_0");
+    	String result = "0_0";
     	for (ScheduleTile tile : list) {
-    		int i = tile.getStartHour();
-    		if (highlightFirstCell) {
-	    		result.append(";firstCell,");
-	    		result.append(tile.getDisplayTime());
-	    		result.append(",");
-				result.append(tile.getCellId());
-				i++;
-    		}
-    		while (i < tile.getEndHour()) {
-    			result.append(";");
-    			result.append(i);
-    			result.append("_");
-    			result.append(tile.getDayOfWeek().ordinal() + 1);
-    			i++;
+    		result += appendFirstCell(tile, highlightFirstCell);
+    		for (int i = tile.getStartHour() + 1; i <tile.getEndHour(); i++) {
+    			result += ";" + tile.getCellId(i);
     		}
     	}
-    	return result.toString();
+    	return result;
 	}
-
+	
+	private String appendFirstCell(ScheduleTile tile, boolean highlightFirstCell) {
+		if (highlightFirstCell) {
+			return ";firstCell," + tile.getDisplayTime() + "," + tile.getStartCellId();
+		} else {
+			return ";" + tile.getCellId(tile.getStartHour());
+		}
+	}
+	
 	public ScheduleTile findScheduleTile(Long userId, String cellName) {
-		ScheduleTile resultTile = null;
 		String[] cellArray = cellName.split("_");
 		int hour = Integer.parseInt(cellArray[1]);
 		DayOfWeek dayOfWeek = DayOfWeek.values()[Integer.parseInt(cellArray[2]) - 1];
-		List<ScheduleTile> list = this.findUsersScheduleTime(userId);
-		for (ScheduleTile tile : list) {
-			if (tile.getDayOfWeek().equals(dayOfWeek)) {
-				if (hour >= tile.getStartHour() && hour <= tile.getEndHour()) {
-					resultTile = tile;
-				}
-			}
-		}
-		return resultTile;
+		return dao.findScheduleTile(userId, hour, dayOfWeek);
 	}
 }
