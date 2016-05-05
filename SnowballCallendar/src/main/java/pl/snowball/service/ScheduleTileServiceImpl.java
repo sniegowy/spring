@@ -12,7 +12,7 @@ import pl.snowball.model.ScheduleTile;
 
 @Service("scheduleTileService")
 @Transactional
-public class ScheduleTileServiceImpl implements ScheduleTileService, findScheduleTileByDayOfWeekAndHour {
+public class ScheduleTileServiceImpl implements ScheduleTileService {
 	
 	@Autowired
 	private ScheduleTileDao dao;
