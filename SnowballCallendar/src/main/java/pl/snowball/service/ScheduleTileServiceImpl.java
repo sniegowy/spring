@@ -37,11 +37,9 @@ public class ScheduleTileServiceImpl implements ScheduleTileService {
     		int i = tile.getStartHour();
     		if (highlightFirstCell) {
 	    		result.append(";firstCell,");
-	    		result.append(tile.getTimeStr());
+	    		result.append(tile.getDisplayTime());
 	    		result.append(",");
-				result.append(tile.getStartHour());
-				result.append("_");
-				result.append(tile.getDayOfWeek().ordinal() + 1);
+				result.append(tile.getCellId());
 				i++;
     		}
     		while (i < tile.getEndHour()) {
@@ -53,22 +51,6 @@ public class ScheduleTileServiceImpl implements ScheduleTileService {
     		}
     	}
     	return result.toString();
-	}
-
-	public ScheduleTile fillNewTileData(Long userId, String startCellId, String endCellId) {
-		String[] startCellStrings = startCellId.split("_");
-		String[] endCellStrings = endCellId.split("_");
-		ScheduleTile tile = new ScheduleTile();
-		tile.setDayOfWeek(DayOfWeek.values()[Integer.parseInt(startCellStrings[2])-1]);
-		tile.setStartHour(Integer.parseInt(startCellStrings[1]));
-		tile.setEndHour(Integer.parseInt(endCellStrings[1])+1);
-		if (tile.getStartHour() > tile.getEndHour()) {
-			int hour = tile.getStartHour();
-			tile.setStartHour(tile.getEndHour());
-			tile.setEndHour(hour);
-		}
-		tile.setUserId(userId);
-		return tile;
 	}
 
 	public ScheduleTile findScheduleTile(Long userId, String cellName) {

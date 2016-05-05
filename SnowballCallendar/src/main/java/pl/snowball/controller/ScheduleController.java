@@ -42,23 +42,9 @@ public class ScheduleController {
         return "user/schedule";
 	}
 	
-	/*@RequestMapping(value="/{userId}-scheduleResult", method=RequestMethod.GET)
-	public String prepareScheduleResult(ModelMap model, @PathVariable Long userId) {
-		return "user/scheduleResult";
-	}
-	
-	@RequestMapping(value="/{userId}-scheduleResult", method={RequestMethod.POST})
-	public @ResponseBody String getScheduleResult(@RequestBody String scheduleCell, HttpServletRequest request, @PathVariable Long userId) {
-		JSONObject json = new JSONObject(scheduleCell);
-		String startCellId = json.getString("startCell");
-		String endCellId = json.getString("stopCell");
-		tile = scheduleTileService.findNewTileData(userId, startCellId, endCellId);
-		return "redirect:scheduleAddTile";
-	}*/
-	
 	@RequestMapping(value="/{userId}-{startCellId}-{endCellId}-scheduleAddTile", method=RequestMethod.GET)
 	public String prepareAddNewScheduleData(ModelMap model, @PathVariable Long userId, @PathVariable("startCellId") String startCellId, @PathVariable("endCellId") String endCellId) {
-		tile = scheduleTileService.fillNewTileData(userId, startCellId, endCellId);
+		tile = new ScheduleTile(userId, startCellId, endCellId);
 		model.addAttribute("scheduleTime", tile);
 		model.addAttribute("daysOfWeek", DayOfWeek.values());
 		model.addAttribute("userId", userId);

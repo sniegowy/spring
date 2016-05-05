@@ -70,25 +70,3 @@ $(function() {
 		}
 	});
 });
-
-function sendResult() {
-	var scheduleCell = {startCell: startCellId, stopCell: stopCellId};
-	
-	$(document).ajaxSend(function(e, xhr, options) {
-        xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
-    });
-	
-	$.ajax({
-		type: "POST",
-		headers: { 
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json' 
-	    },
-	    dataType: 'json',
-	    url: userId + "-scheduleResult",
-	    data: JSON.stringify(scheduleCell),
-	    success: function(result) {
-	    },
-	    async: false
-	});
-}

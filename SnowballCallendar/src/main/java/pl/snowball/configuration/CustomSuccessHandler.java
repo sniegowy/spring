@@ -45,9 +45,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
  
         if (isAdmin(roles)) {
-            url = "/admin/admin.html";
-        } else if (isUser(roles)) {
             url = "/user/usersTable.html";
+        } else if (isUser(roles)) {
+            url = "/calendar/calendar.html";
         } else {
             url = "/accessDenied";
         }

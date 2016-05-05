@@ -14,8 +14,6 @@ public interface ScheduleTileService {
 	
 	String findSelectedCells(Long userId, boolean highlightFirstCell);
 	
-	ScheduleTile fillNewTileData(Long userId, String startCellId, String endCellId);
-	
 	ScheduleTile findScheduleTile(Long userId, String cellName);
 	
 }

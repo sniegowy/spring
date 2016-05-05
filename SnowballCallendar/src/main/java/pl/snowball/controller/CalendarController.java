@@ -59,7 +59,7 @@ public class CalendarController {
  
     @RequestMapping(value="/{userId}-{startCellId}-{endCellId}-addCalendarTile", method=RequestMethod.GET)
 	public String addCalendarTile(ModelMap model, @PathVariable Long userId, @PathVariable("startCellId") String startCellId, @PathVariable("endCellId") String endCellId) {
-    	CalendarTile tile = calendarTileService.fillNewTileData(userId, startCellId, endCellId);
+    	CalendarTile tile = new CalendarTile(userId, startCellId, endCellId);
 		model.addAttribute("scheduleTime", tile);
 		model.addAttribute("daysOfWeek", DayOfWeek.values());
 		model.addAttribute("userId", userId);
