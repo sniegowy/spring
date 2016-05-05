@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/customers")
+public class CustomersController {
 
-	@RequestMapping(value = "/eventTypes", method=RequestMethod.GET)
+	@RequestMapping(value = "/customersTable", method=RequestMethod.GET)
     public String adminPage(Model model) {
-        return "admin/eventTypes";
+        return "customers/customersTable";
     }
 }

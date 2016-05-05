@@ -46,7 +46,6 @@
 	border: 2px solid #86C472;
 	color: white;
     padding: 0 10px;
-    font-size: 15px;
 }
 
 #scheduleTable td.highlighted {
@@ -55,7 +54,7 @@
 }
 
 #scheduleTable td.highlightedFirstCell a {
-	color: #A94442;
+	color: #ffffff;
     text-decoration: none;
     font-weight: bold;
 }
