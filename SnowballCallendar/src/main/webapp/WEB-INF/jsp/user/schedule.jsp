@@ -31,8 +31,19 @@
 	  				</tr>
 	  			</table>
 			</div>
+			<a href="" data-target="#scheduleAddTileModal" data-toggle="modal" style="display: hidden;" id="openModalLink"></a>
+			<a href="../common/success-returnUrl-'${userId}-schedule'.html" data-target="#scheduleAddTileModal" data-toggle="modal" 
+									style="display:hidden;" id="openSuccessModal"></a>
 		</div>
 	</tiles:putAttribute>
 </tiles:insertDefinition>
+
+<div class="modal fade" id="scheduleAddTileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 
 <script src="../resources/js/schedule.js" type="text/javascript"></script>

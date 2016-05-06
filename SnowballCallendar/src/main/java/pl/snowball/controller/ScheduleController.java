@@ -52,8 +52,8 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value="/{userId}-{startCellId}-{endCellId}-scheduleAddTile", method = RequestMethod.POST)
-    public String saveScheduleTime(@Valid ScheduleTile scheduleTime, BindingResult result, ModelMap model) {
-        return saveScheduleTile(scheduleTime, result, model);
+    public String saveScheduleTime(@Valid ScheduleTile scheduleTime, BindingResult result, ModelMap model, @PathVariable Long userId) {
+        return saveScheduleTile(scheduleTime, result, model, userId);
     }
 	
 	@RequestMapping(value="/{userId}-{cellName}-scheduleEdit", method=RequestMethod.GET)
@@ -68,27 +68,32 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value="/{userId}-{cellName}-scheduleEdit", method={RequestMethod.POST})
-	public String saveScheduleTileAfterEdit(@Valid ScheduleTile scheduleTime, BindingResult result, ModelMap model) {
-		return saveScheduleTile(scheduleTime, result, model);
+	public String saveScheduleTileAfterEdit(@Valid ScheduleTile scheduleTime, BindingResult result, ModelMap model, @PathVariable Long userId) {
+		return saveScheduleTile(scheduleTime, result, model, userId);
 	}
 
-	private String saveScheduleTile(ScheduleTile scheduleTime, BindingResult result, ModelMap model) {
+	private String saveScheduleTile(ScheduleTile scheduleTime, BindingResult result, ModelMap model, Long userId) {
 		if (result.hasErrors()) {
             return "user/scheduleAddTile";
         }
-        scheduleTileService.saveScheduleTime(scheduleTime);    
-        model.addAttribute("success", "Updated successfully");
-        return "user/registrationSuccess";
+        scheduleTileService.saveScheduleTime(scheduleTime);
+        return "redirect:" + userId + "-schedule";
 	}
 	
-	@RequestMapping(value="/{userId}-{cellName}-scheduleDelete", method = RequestMethod.GET)
-    public String prepareScheduleTileDelete(@PathVariable("userId") Long userId, @PathVariable("cellName") String cellName, ModelMap model) {
+	@RequestMapping(value="/{userId}-{cellName}-deleteConfirmation", method = RequestMethod.GET)
+    public String confirmScheduleTileDelete(@PathVariable("userId") Long userId, @PathVariable("cellName") String cellName, ModelMap model) {
 		tile = scheduleTileService.findScheduleTile(userId, cellName);
+		model.addAttribute("userId", userId);
+		return "common/deleteConfirmation";
+    }
+	
+	@RequestMapping(value="/{userId}-scheduleDelete", method = RequestMethod.GET)
+    public String prepareScheduleTileDelete(@PathVariable("userId") Long userId, ModelMap model) {
 		scheduleTileService.deleteScheduleTime(tile);
 		return reloadSchedule(userId, model);
     }
      
-    @RequestMapping(value="/{userId}-{cellName}-scheduleDelete", method = RequestMethod.POST)
+    @RequestMapping(value="/{userId}-scheduleDelete", method = RequestMethod.POST)
     public String deleteScheduleTile(@Valid User user, BindingResult result, ModelMap model, @PathVariable("userId") Long userId) {
     	return reloadSchedule(userId, model);
     }

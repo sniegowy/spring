@@ -18,7 +18,12 @@ $(function() {
 				+ 			cellDataArray[1] 
 				+ '		</td>'
 				+ '		<td style="text-align: right; background-color: #86C472; border-width: 0px;">'
-				+ '			<a href="' + userId + '-' + cellName + '-scheduleDelete.html">x</a>'
+				+ '			<a href="' + userId + '-' + cellName + '-scheduleEdit.html" data-target="#scheduleAddTileModal" data-toggle="modal">'
+				+ '				<span class="glyphicon glyphicon-pencil"></span>'
+				+ '         </a>'
+				+ '			<a href="' + userId + '-' + cellName + '-deleteConfirmation.html" data-target="#scheduleAddTileModal" data-toggle="modal">'
+				+ '				<span class="glyphicon glyphicon-trash"></span>'
+				+ '         </a>'
 				+ '		</td>'
 				+ '	</tr>'
 				+ '</table>';
@@ -66,7 +71,16 @@ $(function() {
 		if (isMouseDown) {
 			isMouseDown = false;
 			stopCellId = e.target.id;
-			window.location.href = userId + '-' + startCellId + '-' + stopCellId + "-scheduleAddTile.html";
+			var a = document.getElementById('openModalLink');
+			a.href = userId + '-' + startCellId + '-' + stopCellId + "-scheduleAddTile.html";
+			a.click();
+		}
+	});
+	
+	$("#addScheduleTileForm").onsubmit(function (){
+		if ($(this).valid()) {
+			var a = document.getElementById('openSuccessModal');
+			a.click();
 		}
 	});
 });

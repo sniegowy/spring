@@ -5,16 +5,24 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@page isELIgnored="false"%>
-<tiles:insertDefinition name="defaultTemplate">
-	<tiles:putAttribute name="content">
-		<div class="content">
-			<div class="page-header">
-				<h1><spring:message code="schedule.addTime" /></h1>
-			</div>
-			<div class="row">
-				<div class="col-md-3"></div>
-				<div class="col-md-6">
-					<form:form method="POST" modelAttribute="scheduleTime" class="form-horizontal">		
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4><p><spring:message code="schedule.addTime"/><span class="glyphicon glyphicon-grain"></span></p></h4>
+
+            </div>
+            <div class="modal-body">
+					<form:form method="POST" modelAttribute="scheduleTime" class="form-horizontal" id="addScheduleTileForm">		
 						<form:input type="hidden" path="id" id="id" />
 						<form:input type="hidden" path="userId" id="userId" />	
 						<div class="row">
@@ -88,17 +96,27 @@
 						
 						<div class="row">
 							<div class="form-actions floatRight">
-								<spring:message code="schedule.save" var="saveMsg"/>
+								<spring:message code="schedule.save" var="saveMsg"/>	
 								<input type="submit" value="${saveMsg}" class="btn btn-success"
-									style="margin-left: 10px;" />
+											style="margin-left: 10px;" />	
 								<a class="btn btn-default" style="margin-left: 10px;"
-									href="${userId}-schedule.html"><spring:message code="registration.cancel" /></a>
+									href="${userId}-schedule.html">
+									<spring:message code="registration.cancel" />
+								</a>
+								<a href="../common/success-returnUrl-'${userId}-schedule'.html" data-target="#scheduleAddTileSuccessModal" data-toggle="modal" 
+									style="display:hidden;" id="openSuccessModal"></a>
 							</div>
 						</div>
 					</form:form>
 				</div>
-				<div class="col-md-3"></div>
 			</div>
-		</div>
-	</tiles:putAttribute>
-</tiles:insertDefinition>
+			
+			<div class="modal fade" id="scheduleAddTileSuccessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			
+			        </div>
+			    </div>
+			</div>
+		</body>
+	</html>

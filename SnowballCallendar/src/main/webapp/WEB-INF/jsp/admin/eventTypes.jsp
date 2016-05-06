@@ -34,17 +34,8 @@
 						</tr>
 					</c:forEach>
 				</table>
-				<!-- <a href="addEventType.html" class="btn btn-success"><spring:message code="eventType.newEventType" /></a>-->
-				<a href="addEventType" data-toggle="modal" data-target="#addEventTypeModal"><spring:message code="eventType.newEventType" /></a>
+				<a href="addEventType.html" class="btn btn-success"><spring:message code="eventType.newEventType" /></a>
 			</div>
 		</div>
 	</tiles:putAttribute>
 </tiles:insertDefinition>
-
-<div class="modal fade" id="addEventTypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-        </div>
-    </div>
-</div>

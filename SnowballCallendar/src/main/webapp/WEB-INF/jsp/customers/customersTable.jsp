@@ -15,35 +15,32 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th><spring:message code="users.firstName" /></th>
-							<th><spring:message code="users.lastName" /></th>
+							<th><spring:message code="customers.firstName" /></th>
+							<th><spring:message code="customers.lastName" /></th>
+							<th><spring:message code="customers.phone" /></th>
+							<th><spring:message code="customers.email" /></th>
 						</tr>
 					</thead>
-					<c:forEach items="${users}" var="user">
+					<c:forEach items="${customers}" var="customer">
 						<tr>
-							<td>${user.firstName}</td>
-							<td>${user.lastName}</td>
-							<sec:authorize access="hasRole('ADMIN')">
-								<td style="width: 300px; text-align: right;">
-									<div class="btn-group">
-										<a href="${user.id}-schedule.html" class="btn btn-success" type="button">
-											<spring:message code="users.schedule" />
-										</a>
-										<a href="${user.id}-edit.html" class="btn btn-default" type="button">
-											<spring:message code="users.edit" />
-										</a>
-										<a href="${user.id}-delete.html" class="btn btn-default" type="button">
-											<spring:message code="users.delete" />
-										</a>
-									</div>
-								</td>
-							</sec:authorize>
+							<td>${customer.firstName}</td>
+							<td>${customer.lastName}</td>
+							<td>${customer.phone}</td>
+							<td>${customer.email}</td>
+							<td style="width: 300px; text-align: right;">
+								<div class="btn-group">
+									<a href="${customer.id}-editCustomer.html" class="btn btn-default" type="button">
+										<spring:message code="users.edit" />
+									</a>
+									<a href="${customer.id}-deleteCustomer.html" class="btn btn-default" type="button">
+										<spring:message code="users.delete" />
+									</a>
+								</div>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
-				<sec:authorize access="hasRole('ADMIN')">
-					<a href="add.html" class="btn btn-success"><spring:message code="users.newUser" /></a>
-				</sec:authorize>
+				<a href="addCustomer.html" class="btn btn-success"><spring:message code="users.newUser" /></a>
 			</div>
 		</div>
 	</tiles:putAttribute>
