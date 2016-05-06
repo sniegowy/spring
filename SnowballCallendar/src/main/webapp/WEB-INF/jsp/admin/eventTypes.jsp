@@ -10,41 +10,41 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="page-header">
-					<h1><spring:message code="users.list" /></h1>
+					<h1><spring:message code="menu.eventTypes" /></h1>
 				</div> 
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th><spring:message code="users.firstName" /></th>
-							<th><spring:message code="users.lastName" /></th>
+							<th><spring:message code="eventType.name" /></th>
+							<th><spring:message code="eventType.color" /></th>
+							<th></th>
 						</tr>
 					</thead>
-					<c:forEach items="${users}" var="user">
+					<c:forEach items="${eventTypes}" var="eventType">
 						<tr>
-							<td>${user.firstName}</td>
-							<td>${user.lastName}</td>
-							<sec:authorize access="hasRole('ADMIN')">
-								<td style="width: 300px; text-align: right;">
-									<div class="btn-group">
-										<a href="${user.id}-schedule.html" class="btn btn-success" type="button">
-											<spring:message code="users.schedule" />
-										</a>
-										<a href="${user.id}-edit.html" class="btn btn-default" type="button">
-											<spring:message code="users.edit" />
-										</a>
-										<a href="${user.id}-delete.html" class="btn btn-default" type="button">
-											<spring:message code="users.delete" />
-										</a>
-									</div>
-								</td>
-							</sec:authorize>
+							<td>${eventType.name}</td>
+							<td>${eventType.color}</td>
+							<td style="width: 300px; text-align: right;">
+								<div class="btn-group">
+									<a href="eventType-${eventType.id}-delete.html" class="btn btn-default" type="button">
+										<spring:message code="users.delete" />
+									</a>
+								</div>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
-				<sec:authorize access="hasRole('ADMIN')">
-					<a href="add.html" class="btn btn-success"><spring:message code="users.newUser" /></a>
-				</sec:authorize>
+				<!-- <a href="addEventType.html" class="btn btn-success"><spring:message code="eventType.newEventType" /></a>-->
+				<a href="addEventType" data-toggle="modal" data-target="#addEventTypeModal"><spring:message code="eventType.newEventType" /></a>
 			</div>
 		</div>
 	</tiles:putAttribute>
 </tiles:insertDefinition>
+
+<div class="modal fade" id="addEventTypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>

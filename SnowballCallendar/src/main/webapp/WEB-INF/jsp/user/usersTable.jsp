@@ -17,6 +17,9 @@
 						<tr>
 							<th><spring:message code="users.firstName" /></th>
 							<th><spring:message code="users.lastName" /></th>
+							<sec:authorize access="hasRole('ADMIN')">
+								<th></th>
+							</sec:authorize>
 						</tr>
 					</thead>
 					<c:forEach items="${users}" var="user">

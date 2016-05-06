@@ -8,7 +8,7 @@
 			<div class="page-header"><h2>${success}</h2></div>
 
 			<span>
-				<a href="usersTable.html">Wróć</a>
+				<a href="eventTypes.html">Wróć</a>
 			</span>
 		</div>
 	</tiles:putAttribute>

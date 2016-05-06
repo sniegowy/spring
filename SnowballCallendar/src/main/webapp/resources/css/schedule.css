@@ -1,15 +1,9 @@
 #scheduleTableDiv {
-	height: 65%;
-	overflow-y: auto;
+	overflow-y: none;
 }
 
 #scheduleTable {
 	width: 100%;
-	height: 99%;
-}
-
-#scheduleTable tr {
-	min-height: 2.5em;
 }
 
 #scheduleTable tr:first-child {
@@ -30,6 +24,7 @@
     background-color: #ddd;
     text-align: left;
     font-size: 12px;
+    height: 40px;
 }
 
 #scheduleTable td:first-child, #scheduleTable td:first-child:hover {
